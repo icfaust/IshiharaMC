@@ -16,5 +16,8 @@ output = scipy.array(logo.createPlate(input))
 idx = scipy.logical_xor(logo.circinPoly(input[0],output),logo.circinPoly(input[1],output))
 logo.plotIshi(output)
 logo.plotIshi(output[idx],color='k')
-plt.show() #this should show a 6 pointed start ishihara plate
+plt.show() 
 '''
+
+This should make a 6 pointed star
+Text
