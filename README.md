@@ -12,20 +12,20 @@ shape1 = scipy.array([v*scipy.cos(angles),v*scipy.sin(angles)]).T
 angles += scipy.pi/3
 shape2 = scipy.array([v*scipy.cos(angles),v*scipy.sin(angles)]).T
 inp = (shape1,shape2)
-output = scipy.array(logo.createPlate(inp))
-idx1 = scipy.logical_xor(logo.circinPoly(inp[0],output),logo.circinPoly(inp[1],output))
-idx2 = scipy.logical_and(logo.circinPoly(inp[0],output),logo.circinPoly(inp[1],output))
+output = scipy.array(ishiharaMC.createPlate(inp))
+idx1 = scipy.logical_xor(ishiharaMC.circinPoly(inp[0],output),ishiharaMC.circinPoly(inp[1],output))
+idx2 = scipy.logical_and(ishiharaMC.circinPoly(inp[0],output),ishiharaMC.circinPoly(inp[1],output))
 ```
 
 To do simple plotting:
 ```python
 import matplotlib.pyplot as plt
 plt.subplot(121)
-logo.plotIshi(output,color='g')
-logo.plotIshi(output[idx1],color='r')
-logo.plotIshi(output[idx2],color='b')
+ishiharaMC.plotIshi(output,color='g')
+ishiharaMC.plotIshi(output[idx1],color='r')
+ishiharaMC.plotIshi(output[idx2],color='b')
 plt.subplot(122)
-logo.plotIshi(output)
+ishiharaMC.plotIshi(output)
 plt.show() 
 ```
 
