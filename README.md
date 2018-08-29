@@ -33,3 +33,8 @@ This should make a 6 pointed star
 
 There is some functionality for setting the paint scheme, but generally logic based off the various objects should be known.
 Depending on the color scheme, it could be 2 sets of 2 colors, 2 sets of 3 colors, etc.
+
+Inline-style: 
+![alt text](https://raw.githubusercontent.com/icfaust/IshiharaMC/master/example_Ishihara.png "6 pointed star example")
+
+
