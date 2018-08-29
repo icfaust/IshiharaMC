@@ -5,7 +5,7 @@ It uses a circle intersection algorithm, Jordan's curve theorem, and Monte Carlo
 
 example code:
 ```python
-import logo, scipy
+import ishiharaMC, scipy
 angles = scipy.linspace(0,scipy.pi*2,4)[:3] #don't make the last and first points the same
 v = .9
 shape1 = scipy.array([v*scipy.cos(angles),v*scipy.sin(angles)]).T
