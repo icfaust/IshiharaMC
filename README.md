@@ -37,4 +37,7 @@ Depending on the color scheme, it could be 2 sets of 2 colors, 2 sets of 3 color
 Output of above codes: 
 ![alt text](https://raw.githubusercontent.com/icfaust/IshiharaMC/master/example_Ishihara.png "6 pointed star example")
 
+Additional information on the logic of the code can be found at my website:
+http://ianfaust.com/2016/02/19/Ishihara/
+
 
