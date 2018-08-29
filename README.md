@@ -17,7 +17,6 @@ idx = scipy.logical_xor(logo.circinPoly(input[0],output),logo.circinPoly(input[1
 logo.plotIshi(output)
 logo.plotIshi(output[idx],color='k')
 plt.show() 
-'''
+```
 
 This should make a 6 pointed star
-Text
