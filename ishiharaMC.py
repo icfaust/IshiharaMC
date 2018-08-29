@@ -17,6 +17,12 @@ r += [scipy.array([226.,100.,78.])/255] #e2644e
 g += [scipy.array([0.,141.,55.])/255] #008d37
 g += [scipy.array([124.,188.,74.])/255] #7cbc4a
 
+
+################################################
+#              Monte-Carlo Routines            #
+################################################
+
+
 def genCirc(l=1., s=[.03,.06], n=3):
     """ place a circle of fractional radius s[0] to s[1]
     of l at n different sizes within l """
@@ -78,6 +84,11 @@ def shapeIshi(shapes,num=1e4, l=1., s=[.03,.06], n=3, output=[],slim=.01):
 
     return output    
 
+
+################################################
+#                Staging Routines              #
+################################################
+
 def test(l=1.):
     output = genIshi(l=l,s=[.03,.06])
     print('step1')
@@ -111,6 +122,41 @@ def test3(l=1.):
     print('step4')    
     return output
 
+def createPlate(shape,l=1.,s=[[.03,.06],[.02,.05],[.01,.04],[.0,.03]],num=[1e4,2e4,5e4,1e5]):
+    """ generates circles for an ishihara plate (inside a circle)
+
+
+    Given an array of numpy/scipy arrays of X,Y coordinates describing a 2D polygon,
+    it will randomly place circles of 
+
+
+    Args:
+        shape (Array-like): Array of cartesian-coordinates of the vertices of the polygon.
+                            It is a list of numpy/scipy arrays, so that polygons may vary
+                            in number of vertices with general shape: (polygon,coordinates,2).
+                            X-coordinates for polygon i: (i,:,0)
+                            Y-coordinates for polygon i: (i,:,1)
+
+    Kwargs:
+        l (float): Used to scale the size of the circle to encompass all polygons
+        s (n x 2 array): is fractional size of the random circle to place (compare to large)
+        num (n array): is the number of tries to attempt, later steps require more tries
+
+    Returns:
+        output (list): list of 3 elements which is the cartesian coordinates and size of circle
+
+    """
+
+    output = []
+    
+    for i in xrange(len(num)):
+        print('step '+str(i+1)+' of '+str(len(num)))
+        output = shapeIshi(shape,l=l,s=s[i],num=num[i],output=output) 
+    return output
+
+################################################
+#               Plotting Routines              #
+################################################
 
 def plotShape(shape):
     plt.plot(shape[...,0],shape[...,1],'b')
@@ -141,6 +187,32 @@ def plotIshi(stuff, color=None):
     plt.axis([-1,1,-1,1])
     plt.gca().set_aspect('equal')
 
+def plotIshiRG(stuff, color=r):
+    fig = plt.gca()
+
+    for i in stuff:
+        val = int(round(rand()))
+        temp = plt.Circle((i[0],i[1]),
+                          i[2],
+                          color=color[val],
+                          fill=True)
+            
+        plt.gca().add_artist(temp)
+
+            
+    plt.axis([-1,1,-1,1])
+    plt.gca().set_aspect('equal')
+    plt.axis('off')
+    #ax = plt.Axes(plt.gcf(), [0., 0., 1., 1.])
+    #ax.set_axis_off()
+    
+
+
+################################################
+#               Testing Routines               #
+################################################
+    
+    
 def circTest(pt1,pt2,circ,r):
     #print(pt1,pt2,circ,r)
     vec1 = pt2-pt1
@@ -212,23 +284,3 @@ def inPolygon(polyx, polyy, pointx, pointy):
                 result = not result
 
     return result
-
-
-def plotIshiRG(stuff, color=r):
-    fig = plt.gca()
-
-    for i in stuff:
-        val = int(round(rand()))
-        temp = plt.Circle((i[0],i[1]),
-                          i[2],
-                          color=color[val],
-                          fill=True)
-            
-        plt.gca().add_artist(temp)
-
-            
-    plt.axis([-1,1,-1,1])
-    plt.gca().set_aspect('equal')
-    plt.axis('off')
-    #ax = plt.Axes(plt.gcf(), [0., 0., 1., 1.])
-    #ax.set_axis_off()
