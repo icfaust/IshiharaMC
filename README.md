@@ -22,8 +22,8 @@ To do simple plotting:
 import matplotlib.pyplot as plt
 plt.subplot(121)
 logo.plotIshi(output,color='g')
-logo.plotIshi(output[idx1],color='b')
-logo.plotIshi(output[idx2],color='r')
+logo.plotIshi(output[idx1],color='r')
+logo.plotIshi(output[idx2],color='b')
 plt.subplot(122)
 logo.plotIshi(output)
 plt.show() 
@@ -34,7 +34,7 @@ This should make a 6 pointed star
 There is some functionality for setting the paint scheme, but generally logic based off the various objects should be known.
 Depending on the color scheme, it could be 2 sets of 2 colors, 2 sets of 3 colors, etc.
 
-Inline-style: 
+Output of above codes: 
 ![alt text](https://raw.githubusercontent.com/icfaust/IshiharaMC/master/example_Ishihara.png "6 pointed star example")
 
 
