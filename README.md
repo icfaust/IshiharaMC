@@ -11,9 +11,9 @@ v = .6
 shape1 = scipy.array([v*scipy.cos(angles),v*scipy.sin(angles)]).T
 angles += scipy.pi/3
 shape2 = scipy.array([v*scipy.cos(angles),v*scipy.sin(angles)]).T
-input = (shape1,shape2)
-output = scipy.array(logo.createPlate(input))
-idx = scipy.logical_xor(logo.circinPoly(input[0],output),logo.circinPoly(input[1],output))
+inp = (shape1,shape2)
+output = scipy.array(logo.createPlate(inp))
+idx = scipy.logical_xor(logo.circinPoly(inp[0],output),logo.circinPoly(inp[1],output))
 logo.plotIshi(output)
 logo.plotIshi(output[idx],color='k')
 plt.show() 
