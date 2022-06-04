@@ -1,21 +1,21 @@
 import matplotlib.pyplot as plt
-import scipy
+import numpy as np
 from random import random as rand
 import pickle
 
-beast = pickle.load(open('beast2.p','rb'))
+#beast = pickle.load(open('beast2.p','rb'))
 
-diamond = [scipy.array([[.5,0],[0,.5],[-.5,0],[0,-.5]])]
+diamond = [np.array([[.5,0],[0,.5],[-.5,0],[0,-.5]])]
 
-color1 = scipy.array([43.,172.,142.])/255 # hex 2bac90
-color2 = scipy.array([242.,111.,41.])/255 # hex f26f29
+color1 = np.array([43.,172.,142.])/255 # hex 2bac90
+color2 = np.array([242.,111.,41.])/255 # hex f26f29
 
 r = []
 g = []
-r += [scipy.array([193.,21.,45.])/255] #c1152d
-r += [scipy.array([226.,100.,78.])/255] #e2644e
-g += [scipy.array([0.,141.,55.])/255] #008d37
-g += [scipy.array([124.,188.,74.])/255] #7cbc4a
+r += [np.array([193.,21.,45.])/255] #c1152d
+r += [np.array([226.,100.,78.])/255] #e2644e
+g += [np.array([0.,141.,55.])/255] #008d37
+g += [np.array([124.,188.,74.])/255] #7cbc4a
 
 
 ################################################
@@ -27,18 +27,18 @@ def genCirc(l=1., s=[.03,.06], n=3):
     """ place a circle of fractional radius s[0] to s[1]
     of l at n different sizes within l """
 
-    temp = (s[1] - s[0])*scipy.ceil(n*rand())/n+s[0]
-    return l*rand(), 2*scipy.pi*rand(), l*temp
+    temp = (s[1] - s[0])*np.ceil(n*rand())/n+s[0]
+    return l*rand(), 2*np.pi*rand(), l*temp
 
 def genIshi(num=1e4, l=1., s=[.03,.06], n=3, output=[],slim=.01):
     leng = len(output)
-    for i in xrange(int(num)):
+    for i in range(int(num)):
         valid = True
         j = 0
         test = genCirc(l=l, s=s, n=n) #get a random circle in range
         if test[0]+test[2] < l: # the edge of the new circle doesnt exceed large
-            inpx = test[0]*scipy.cos(test[1])
-            inpy = test[0]*scipy.sin(test[1])
+            inpx = test[0]*np.cos(test[1])
+            inpy = test[0]*np.sin(test[1])
             while valid:
                 if j == leng: # test while loop across current set of circles
                     output += [[inpx,
@@ -46,7 +46,7 @@ def genIshi(num=1e4, l=1., s=[.03,.06], n=3, output=[],slim=.01):
                                 test[2]]] # add circle to list   
                     valid = False
                     leng += 1
-                elif scipy.sqrt((output[j][0]-inpx)**2 + (output[j][1]-inpy)**2) < output[j][2]+test[2]+l*slim:
+                elif np.sqrt((output[j][0]-inpx)**2 + (output[j][1]-inpy)**2) < output[j][2]+test[2]+l*slim:
                     valid = False
                 else:
                     j+=1
@@ -55,17 +55,17 @@ def genIshi(num=1e4, l=1., s=[.03,.06], n=3, output=[],slim=.01):
 
 def shapeIshi(shapes,num=1e4, l=1., s=[.03,.06], n=3, output=[],slim=.01):
     leng = len(output)
-    for i in xrange(int(num)):
+    for i in range(int(num)):
         valid = True
         j = 0
         test = genCirc(l=l, s=s, n=n) #get a random circle in range
         if test[0]+test[2] < l: # the edge of the new circle doesnt exceed large
-            inpx = test[0]*scipy.cos(test[1])
-            inpy = test[0]*scipy.sin(test[1])
+            inpx = test[0]*np.cos(test[1])
+            inpy = test[0]*np.sin(test[1])
             while valid:
                 if j == leng: # test while loop across current set of circles
                     for k in shapes: # test circle to see if it intersects interior shape
-                        valid = valid and shapeTest(k,scipy.array([inpx,inpy,test[2]]))
+                        valid = valid and shapeTest(k,np.array([inpx,inpy,test[2]]))
                             
                     if valid:
                         output += [[inpx,
@@ -77,7 +77,7 @@ def shapeIshi(shapes,num=1e4, l=1., s=[.03,.06], n=3, output=[],slim=.01):
                             #plotIshi(output)
                     valid = False
 
-                elif scipy.sqrt((output[j][0]-inpx)**2 + (output[j][1]-inpy)**2) < output[j][2]+test[2]+l*slim:
+                elif np.sqrt((output[j][0]-inpx)**2 + (output[j][1]-inpy)**2) < output[j][2]+test[2]+l*slim:
                     valid = False
                 else:
                     j+=1
@@ -126,13 +126,13 @@ def createPlate(shape,l=1.,s=[[.03,.06],[.02,.05],[.01,.04],[.0,.03]],num=[1e4,2
     """ generates circles for an ishihara plate (inside a circle)
 
 
-    Given an array of numpy/scipy arrays of X,Y coordinates describing a 2D polygon,
+    Given an array of numpy/np arrays of X,Y coordinates describing a 2D polygon,
     it will randomly place circles of 
 
 
     Args:
         shape (Array-like): Array of cartesian-coordinates of the vertices of the polygon.
-                            It is a list of numpy/scipy arrays, so that polygons may vary
+                            It is a list of numpy/np arrays, so that polygons may vary
                             in number of vertices with general shape: (polygon,coordinates,2).
                             X-coordinates for polygon i: (i,:,0)
                             Y-coordinates for polygon i: (i,:,1)
@@ -149,7 +149,7 @@ def createPlate(shape,l=1.,s=[[.03,.06],[.02,.05],[.01,.04],[.0,.03]],num=[1e4,2
 
     output = []
     
-    for i in xrange(len(num)):
+    for i in range(len(num)):
         print('step '+str(i+1)+' of '+str(len(num)))
         output = shapeIshi(shape,l=l,s=s[i],num=num[i],output=output) 
     return output
@@ -161,8 +161,8 @@ def createPlate(shape,l=1.,s=[[.03,.06],[.02,.05],[.01,.04],[.0,.03]],num=[1e4,2
 def plotShape(shape):
     plt.plot(shape[...,0],shape[...,1],'b')
 
-    #plt.plot(scipy.concatenate((shapes[0],shapes[0][-1])),
-    #         scipy.concatenate((shapes[1],shapes[1][-1])),':k')
+    #plt.plot(np.concatenate((shapes[0],shapes[0][-1])),
+    #         np.concatenate((shapes[1],shapes[1][-1])),':k')
 
 def plotIshi(stuff, color=None):
     fig = plt.gca()
@@ -217,22 +217,22 @@ def circTest(pt1,pt2,circ,r):
     #print(pt1,pt2,circ,r)
     vec1 = pt2-pt1
     vec2 = circ-pt1
-    A = scipy.sum(vec1**2)
-    B = -2*scipy.sum(vec1*vec2)
-    C = scipy.sum(vec2**2) - r**2
+    A = np.sum(vec1**2)
+    B = -2*np.sum(vec1*vec2)
+    C = np.sum(vec2**2) - r**2
     temp = (B/(2*A))**2-(C/A) 
 
     if temp < 0: #line does not intersect circle at any point along line
         return False
-    elif C < 0 or scipy.sum((circ-pt2)**2)-r**2 < 0:# one or both the endpoints are within the circle
+    elif C < 0 or np.sum((circ-pt2)**2)-r**2 < 0:# one or both the endpoints are within the circle
         return True
-    elif (-B/(2*A) - scipy.sqrt(temp) < 1 and -B/(2*A) - scipy.sqrt(temp) > 0) or (-B/(2*A) + scipy.sqrt(temp) < 1 and -B/(2*A) + scipy.sqrt(temp) > 0): #line intersects circle between bounds
+    elif (-B/(2*A) - np.sqrt(temp) < 1 and -B/(2*A) - np.sqrt(temp) > 0) or (-B/(2*A) + np.sqrt(temp) < 1 and -B/(2*A) + np.sqrt(temp) > 0): #line intersects circle between bounds
         return True
     else:
         return False # line intersects, but not between pt1 to pt2
 
 def shapeTest(pts,circ):
-    for i in xrange(len(pts)): #while still a valid circle
+    for i in range(len(pts)): #while still a valid circle
         if circTest(pts[i],pts[i-1],circ[:2],circ[2]): #intersects a line
             return False
     
@@ -240,12 +240,12 @@ def shapeTest(pts,circ):
 
 def circinPoly(shape,ishi):
     # interface with inPolygon (Thanks John!!!)
-    temp = scipy.array(shape)
+    temp = np.array(shape)
     output = len(ishi)*[False]
-    for i in xrange(len(ishi)):
+    for i in range(len(ishi)):
         output[i] = inPolygon(shape[...,0],shape[...,1],ishi[i][0],ishi[i][1])
 
-    return scipy.array(output)
+    return np.array(output)
 
 def inPolygon(polyx, polyy, pointx, pointy):
     """Function calculating whether a given point is within a 2D polygon.
